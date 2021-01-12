@@ -22,6 +22,18 @@ def methane_molecule():
 
     return symbols, coordinates
 
+@pytest.mark.parametrize("p1, p2, p3, expected_value", [
+    (np.array([np.sqrt(2)/2, np.sqrt(2)/2, 0]), np.array([0, 0, 0]), np.array([1, 0, 0]), 45),
+    (np.array([0, 0, -1]), np.array([0, 1, 0]), np.array([1, 0, 0]), 60),
+    (np.array([np.sqrt(3)/2, (1/2), 0]), np.array([0, 0, 0]), np.array([1, 0, 0]), 30),
+]
+)
+def test_calculate_angle_many(p1, p2, p3, expected_value):
+
+    calculated_angle = molecool.calculate_angle(p1, p2, p3, degrees=True)
+
+    assert expected_value == pytest.approx(calculated_angle), f'{calculated_angle} {expected_value}'
+
 def test_calculate_angle():
 
     r1 = np.array([0, 0, -1])
