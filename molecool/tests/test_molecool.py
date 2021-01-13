@@ -59,6 +59,30 @@ def test_calculate_angle():
 
     assert expected_value == calculated_value
 
+def test_molecular_mass():
+    symbols = ['C', 'H', 'H', 'H', 'H']
+
+    calculated_mass = molecool.calculate_molecular_mass(symbols)
+
+    actual_mass = 16.04
+
+    assert pytest.approx(actual_mass, abs=1e-2) == calculated_mass
+
+def test_build_bond_list_failure():
+    coordinates = np.array([])
+    
+    with pytest.raises(ValueError):
+        molecool.build_bond_list(coordinates)
+
+def test_center_of_mass(methane_molecule):
+    symbols, coordinates = methane_molecule
+
+    center_of_mass = molecool.calculate_center_of_mass(symbols, coordinates)
+
+    expected_center = np.array([1,1,1])
+    
+    assert np.array_equal(center_of_mass, expected_center)
+
 
 @pytest.mark.skip
 def test_build_bond_list_failure(methane_molecule):
